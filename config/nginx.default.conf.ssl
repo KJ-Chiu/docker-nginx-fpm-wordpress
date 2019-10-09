@@ -1,8 +1,18 @@
 server {
-    listen [::]:80;
-    listen 80;
+  listen [::]:80;
+  listen 80;
 
+  server_name blog.dotslash.tw;
+
+  # redirect http to https
+  return 301 https://blog.dotslash.tw$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
     server_name blog.dotslash.tw;
+    ssl_certificate /root/.acme.sh/blog.dotslash.tw/blog.dotslash.tw.cer;
+    ssl_certificate_key /root/.acme.sh/blog.dotslash.tw/blog.dotslash.tw.key;
 
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginxerror.log;
